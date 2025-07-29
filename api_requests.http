@@ -1,0 +1,29 @@
+### 1. Registro
+POST http://127.0.0.1:8000/api/participants
+Content-Type: application/json
+Accept: application/json
+
+{
+    "nombre": "Leandro",
+    "apellido": "Martinez",
+    "dni": "40237812",
+    "email": "leandro.martinez@example.com"
+}
+
+### 2.Prueba de Validación
+POST http://127.0.0.1:8000/api/participants
+Content-Type: application/json
+Accept: application/json
+
+{
+    "nombre": "Pedro",
+    "apellido": "Pascal"
+}
+
+### 4.Prueba de busqueda unitaria y su repetición
+GET http://127.0.0.1:8000/api/participants/1
+Accept: application/json
+
+### 5. Prueba de obtención de estadísticas globales
+GET http://127.0.0.1:8000/api/stats
+Accept: application/json

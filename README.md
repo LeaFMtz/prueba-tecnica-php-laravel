@@ -1,66 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API REST de Inscripciones - Evaluación Técnica
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Realizado por: **Leandro Fabian Martinez**
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. Contexto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Este repositorio contiene la solución a la evaluación técnica para el puesto de Desarrollador PHP. El proyecto consiste en una API REST construida con Laravel 11 para gestionar la inscripción de participantes a un evento, siguiendo los requisitos funcionales y de arquitectura solicitados.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 2. Stack Tecnológico
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Framework**: Laravel 11
+* **Lenguaje**: PHP 8.4.10
+* **Base de Datos**: MySQL
+* **Caché y Colas**: Redis
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 3. Instalación y Ejecución
 
-## Laravel Sponsors
+Sigue estos pasos para configurar el proyecto en un entorno de desarrollo local.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prerrequisitos
 
-### Premium Partners
+* PHP (v8.4.10 o compatible)
+* Composer
+* Un servidor de base de datos (MySQL / MariaDB)
+* Un servidor de Redis
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Pasos
 
-## Contributing
+1.  **Clonar el repositorio y acceder a la carpeta**:
+    ```bash
+    git clone [https://github.com/LeaFMtz/prueba-tecnica-php-laravel.git](https://github.com/LeaFMtz/prueba-tecnica-php-laravel.git)
+    cd prueba-tecnica-php-laravel
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2.  **Instalar dependencias de PHP**:
+    ```bash
+    composer install
+    ```
 
-## Code of Conduct
+3.  **Configurar el archivo de entorno**:
+    * Copia el archivo de ejemplo `.env.example` a un nuevo archivo llamado `.env`.
+        ```bash
+        cp .env.example .env
+        ```
+    * **Importante**: Antes de continuar, crea una base de datos vacía en tu gestor de base de datos.
+    * Abre el archivo `.env` y edítalo para que coincida con tu configuración local. Asegúrate de revisar estas líneas:
+        ```dotenv
+        # Credenciales de la Base de Datos
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=el_nombre_de_tu_db_vacia
+        DB_USERNAME=tu_usuario_db
+        DB_PASSWORD=tu_contraseña_db
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+        # Configuración de Redis
+        SESSION_DRIVER=redis
+        QUEUE_CONNECTION=redis
+        CACHE_STORE=redis
+        ```
 
-## Security Vulnerabilities
+4.  **Generar la clave de la aplicación**:
+    ```bash
+    php artisan key:generate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5.  **Crear las tablas de la base de datos**:
+    ```bash
+    php artisan migrate
+    ```
 
-## License
+### Ejecución
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Para el correcto funcionamiento de la API, necesitas tener dos procesos corriendo en dos terminales separadas:
+
+* **Terminal 1 (Servidor Web)**:
+    ```bash
+    php artisan serve
+    ```
+* **Terminal 2 (Procesador de Colas)**:
+    ```bash
+    php artisan queue:work
+    ```
+
+---
+
+## 4. Endpoints de la API
+
+La API expone los siguientes endpoints para interactuar con el sistema.
+
+| Método | URL                          | Descripción                               |
+| :----- | :--------------------------- | :---------------------------------------- |
+| `POST` | `/api/participants`          | Registra un nuevo participante.           |
+| `GET`  | `/api/participants/{id}`     | Obtiene un participante específico por su ID. |
+| `GET`  | `/api/stats`                 | Obtiene el contador total de participantes registrados. |
+
+### Ejemplo de Petición `POST /api/participants`
+
+Para registrar un nuevo participante, se debe enviar un cuerpo (body) en formato JSON con la siguiente estructura:
+
+```json
+{
+    "nombre": "Ana",
+    "apellido": "López",
+    "dni": "35123456",
+    "email": "ana.lopez@example.com"
+}
+```
+
+Para ver ejemplos completos y ejecutables de todas las peticiones, consulta el archivo `api_requests.http` incluido en la raíz de este repositorio. Dicho archivo puede ser utilizado con la extensión **REST Client** para Visual Studio Code.
+
+---
+
+## 5. Decisiones de Arquitectura
+
+Para el desarrollo de esta API, se tomó un enfoque de arquitectura por capas, priorizando la separación de responsabilidades, la mantenibilidad y la eficiencia, en línea con los principios **SOLID**.
+
+* **Arquitectura en Capas (Controller-Service-Repository)**
+    Se implementó este patrón para delimitar claramente las responsabilidades:
+    * **Controller**: Su única función es gestionar la comunicación HTTP (peticiones y respuestas), delegando toda la lógica de negocio.
+    * **Service**: Actúa como el orquestador de la lógica de negocio. Mantiene el código de la aplicación puro, sin dependencias del framework, y coordina las interacciones entre los diferentes componentes.
+    * **Repository**: Abstrae y centraliza toda la interacción con la capa de persistencia de datos (base de datos y caché). Esto permite que la lógica de negocio sea agnóstica a la fuente de datos.
+
+* **Desacoplamiento con Eventos y Listeners (Patrón Observer)**
+    Para cumplir con el requisito de ejecutar acciones secundarias de forma desacoplada, se utilizó el sistema de Eventos de Laravel. Al registrar un participante, se dispara un evento `ParticipantRegistered`. Dos `Listeners` independientes (`SendWelcomeNotification` y `UpdateRegistrationStats`) reaccionan a este evento. De esta forma, el servicio de registro no conoce los detalles de las acciones secundarias, y se pueden añadir más acciones en el futuro sin modificar el flujo principal.
+
+* **Eficiencia mediante Colas (Queues)**
+    El listener que simula el envío del email (`SendWelcomeNotification`) implementa la interfaz `ShouldQueue`. Esto hace que la tarea se procese en segundo plano a través de un trabajador de colas, usando Redis. El resultado es una respuesta inmediata y una mejor experiencia para el cliente de la API, ya que no tiene que esperar a que se completen tareas potencialmente lentas.
+
+* **Validación Robusta y Aislada (Form Requests)**
+    La validación de las peticiones se extrajo de los controladores y se encapsuló en clases `Form Request` dedicadas. Esto limpia el controlador de responsabilidades que no le corresponden, centraliza las reglas de validación y hace el código más reutilizable y fácil de leer.
+
+* **Estrategia de Caché para Rendimiento**
+    Se implementó una estrategia de caché en el método `findById` del repositorio utilizando `Cache::remember`. Esto asegura que las consultas repetidas por un mismo participante se sirvan directamente desde Redis, evitando accesos innecesarios a la base de datos y garantizando el rendimiento "casi instantáneo" solicitado.
+
+* **Contador Global Atómico con Redis**
+    Para la actualización de las estadísticas, se utilizó directamente el comando `INCR` de Redis. Esta decisión se basa en que es una operación atómica y extremadamente rápida, lo que garantiza la consistencia del contador sin impactar el rendimiento. A diferencia del envío de email, esta acción se ejecuta de forma síncrona, demostrando un uso selectivo de las colas solo cuando es estrictamente necesario.
+
+* **Integridad de Datos en la Base de Datos**
+    Además de la validación en la aplicación, se añadieron restricciones `UNIQUE` a nivel de base de datos en las columnas `dni` y `email` a través de las migraciones. Esto proporciona una capa final y robusta de seguridad para garantizar la integridad de los datos.
